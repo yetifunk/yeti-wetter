@@ -1,23 +1,53 @@
-import logo from './logo.svg';
 import './App.css';
 
+import { useEffect } from 'react';
+import { useState } from 'react';
+
+import Header from './components/Header/Header';
+import SearchForm from './components/SearchForm/SearchForm';
+import SearchResults from './components/Search Results/SearchResults';
+
 function App() {
+
+  const weatherSearch = {
+    key: process.env.REACT_APP_OPENWEATHER_API_KEY,
+    api: 'api.openweathermap.org/data/2.5/weather?q=',
+    city: '80918',
+    apikey: '&appid=',
+    units: '&units=imperial'
+  }
+
+  const [weather, setWeather] = useState('');
+
+  async function getWeather() {
+    const url = `${weatherSearch.api}${weatherSearch.city}${weatherSearch.units}${weatherSearch.apikey}${weatherSearch.key}`
+    console.log(url)
+    const response = await fetch(url);
+    const data = await response.json();
+    setWeather(data);
+    console.log(response)
+    console.log(data)
+    console.log(weather)
+
+    // fetch(url)
+    //   .then(response => response.json())
+    //   .then(response => {
+    //     setWeather(response.data);
+    //   console.log(setWeather)
+    //   })
+    //   .catch(console.error);
+  }
+
+  useEffect(() => {
+    getWeather();
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <SearchForm />
+      <SearchResults />
+
     </div>
   );
 }
