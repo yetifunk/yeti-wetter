@@ -8,11 +8,14 @@ export default function SearchResults ({ weather }) {
             <>
             <div className="search-results">
                 <h1>Results:</h1>
-                <p>
-                    {weather.name}
-                    <br></br>
-                    {weather.main.temp}
-                </p>
+                <h2>{weather.name}</h2>
+                <h3>{weather.weather[0].description}</h3>
+                <h2>{weather.main.temp}° F</h2>
+                <h3>Low: {weather.main.temp_min}° F</h3>
+                <h3>High: {weather.main.temp_max}° F</h3>
+                <h3>Humidity: {weather.main.humidity}%</h3>
+                <h3>Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString('en-IN')}</h3>
+                <h3>Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString('en-IN')}</h3>
             </div>
             </>
         )

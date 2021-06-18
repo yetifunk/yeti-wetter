@@ -2,12 +2,42 @@
   padding: 10px 0 0 10px;
 }
 
-h1 {
-  margin: 0;
+h1, h2, h3 {
+  margin: 0 0 4px 0;
+}
+
+h2, h3 {
+  margin-left: 150px;
 }
 
 div.left {
+  display: flex;
+  flex-direction: column;
   width: 400px;
   background-color: rgb(23, 201, 171);
   border: 2px solid black;
+  color:rgb(60, 18, 138)
+}
+
+div.header {
+  text-align: left;
+}
+
+form.search-form {
+  text-align: left;
+  display: flex;
+}
+
+input {
+  flex-grow: 3;
+  background-color: rgb(255, 236, 126);
+  border: 1px solid black;
+  padding: 5px;
+}
+
+button {
+  flex-grow: 1;
+  padding: 5px;
+  background-color: rgb(160, 255, 106);
+  border: 1px solid black;
 }
