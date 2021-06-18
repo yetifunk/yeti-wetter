@@ -11,43 +11,56 @@ function App() {
 
   const weatherSearch = {
     key: process.env.REACT_APP_OPENWEATHER_API_KEY,
-    api: 'api.openweathermap.org/data/2.5/weather?q=',
-    city: '80918',
+    api: 'http://api.openweathermap.org/data/2.5/weather?q=',
     apikey: '&appid=',
     units: '&units=imperial'
   }
 
-  const [weather, setWeather] = useState('');
+  const [weather, setWeather] = useState([]);
+  const [searchString, setSearchString] = useState('80918');
+  const [lastSearch, setLastSearch] = useState('');
 
-  async function getWeather() {
-    const url = `${weatherSearch.api}${weatherSearch.city}${weatherSearch.units}${weatherSearch.apikey}${weatherSearch.key}`
-    console.log(url)
-    const response = await fetch(url);
-    const data = await response.json();
-    setWeather(data);
-    console.log(response)
-    console.log(data)
-    console.log(weather)
-
-    // fetch(url)
-    //   .then(response => response.json())
-    //   .then(response => {
-    //     setWeather(response.data);
-    //   console.log(setWeather)
-    //   })
-    //   .catch(console.error);
+  function handleChange(event) {
+    setSearchString(event.target.value);
   }
 
-  useEffect(() => {
-    getWeather();
-  });
+  function handleSubmit(event) {
+    event.preventDefault();
+    getWeather(searchString)
+  }
+  // console.log(searchString)
+
+  async function getWeather() {
+    const url = `${weatherSearch.api}${searchString}${weatherSearch.units}${weatherSearch.apikey}${weatherSearch.key}`
+    // console.log(url)
+
+    await fetch(url)
+      .then(res => res.json())
+      .then(result => {
+        setWeather(result)
+      })
+      .catch(console.error);
+  }
+
+  // useEffect(() => {
+  //   getWeather();
+  // }, []);
+
+  // console.log(weather)
+  console.log(weather)
+  console.log(typeof(weather))
 
   return (
     <div className="App">
-      <Header />
-      <SearchForm />
-      <SearchResults />
-
+      <div className="left">
+        <Header />
+        <SearchForm 
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          searchString={searchString}
+        />
+        <SearchResults weather={weather}/>
+      </div>
     </div>
   );
 }
