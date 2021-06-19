@@ -29,7 +29,7 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
     getWeather(searchString)
-  }
+  } 
 
   useEffect(() => {
     getWeather();
