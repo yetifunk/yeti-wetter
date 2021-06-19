@@ -48,10 +48,6 @@ button {
   border: 1px solid black;
 }
 
-div.middle {
-
-}
-
 div.coin-prices {
   display: grid;
   width: 250px;

@@ -30,7 +30,6 @@ function App() {
     event.preventDefault();
     getWeather(searchString)
   }
-  // console.log(searchString)
 
   useEffect(() => {
     getWeather();
@@ -38,7 +37,6 @@ function App() {
 
   async function getWeather() {
     const url = `${weatherSearch.api}${searchString}${weatherSearch.units}${weatherSearch.apikey}${weatherSearch.key}`
-    // console.log(url)
 
     await fetch(url)
       .then(res => res.json())
@@ -47,12 +45,6 @@ function App() {
       })
       .catch(console.error);
   }
-  console.log(weather)
-
-
-  // console.log(weather)
-  // console.log(weather)
-  // console.log(typeof(weather))
 
   ////Coin Handelers
   const [coinPrice, setCoinPrice] = useState([]);
@@ -71,9 +63,6 @@ function App() {
       })
       .catch(console.error);
   }
-  console.log(coinPrice)
-
-
 
 
   return (
