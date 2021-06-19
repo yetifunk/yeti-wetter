@@ -6,9 +6,11 @@ import { useState } from 'react';
 import Header from './components/Header/Header';
 import SearchForm from './components/SearchForm/SearchForm';
 import SearchResults from './components/Search Results/SearchResults';
+import CoinPriceDisplay from './components/CoinPriceDisplay/CoinPriceDisplay';
 
 function App() {
 
+  ////Weather Handlers
   const weatherSearch = {
     key: process.env.REACT_APP_OPENWEATHER_API_KEY,
     api: 'http://api.openweathermap.org/data/2.5/weather?q=',
@@ -30,6 +32,10 @@ function App() {
   }
   // console.log(searchString)
 
+  useEffect(() => {
+    getWeather();
+  }, []);
+
   async function getWeather() {
     const url = `${weatherSearch.api}${searchString}${weatherSearch.units}${weatherSearch.apikey}${weatherSearch.key}`
     // console.log(url)
@@ -41,14 +47,34 @@ function App() {
       })
       .catch(console.error);
   }
+  console.log(weather)
 
-  // useEffect(() => {
-  //   getWeather();
-  // }, []);
 
   // console.log(weather)
-  console.log(weather)
-  console.log(typeof(weather))
+  // console.log(weather)
+  // console.log(typeof(weather))
+
+  ////Coin Handelers
+  const [coinPrice, setCoinPrice] = useState([]);
+
+  useEffect(() => {
+    getCoinPrices();
+  }, []);
+
+  async function getCoinPrices() {
+    const COIN_URL = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cdogecoin%2Cethereum%2Cmonero&vs_currencies=usd&include_24hr_change=true"
+
+    await fetch(COIN_URL)
+      .then(res => res.json())
+      .then(result => {
+        setCoinPrice(result)
+      })
+      .catch(console.error);
+  }
+  console.log(coinPrice)
+
+
+
 
   return (
     <div className="App">
@@ -60,6 +86,9 @@ function App() {
           searchString={searchString}
         />
         <SearchResults weather={weather}/>
+      </div>
+      <div className="middle">
+        <CoinPriceDisplay coinPrice={coinPrice}/>
       </div>
     </div>
   );
